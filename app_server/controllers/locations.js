@@ -5,7 +5,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "http://intense-sierra-38427.herokuapp.com/";
+  apiOptions.server = "http://intense-sierra-38427.herokuapp.com";
 }
 
 var _showError = function (req, res, status) {
