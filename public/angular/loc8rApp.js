@@ -16,6 +16,7 @@ var geolocation = function () {
   };
 };
 
+/*
 var loc8rData = function ($http) {
   var locationByCoords = function (lat, lng) {
     return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20');
@@ -25,7 +26,26 @@ var loc8rData = function ($http) {
     locationByCoords : locationByCoords
   };
 }
+*/
 
+var loc8rData = function ($http) {
+  return $http.get('/api/locations?lng=23.6116&lat=46.779&maxDistance=20');
+}
+
+var locationListCtrl = function ($scope, loc8rData) {
+  $scope.message = "Searching for nearby places";
+  
+  loc8rData
+    .success(function(data) {
+      $scope.message = data.length > 0 ? "" : "No locations found";
+      $scope.data = { locations: data };
+    })
+    .error(function (e) {
+      $scope.message = "Sorry, something's gone wrong ";
+    });
+};
+
+/*
 var locationListCtrl = function ($scope, loc8rData, geolocation) {
   $scope.message = "Checking your location";
 
@@ -59,6 +79,7 @@ var locationListCtrl = function ($scope, loc8rData, geolocation) {
 
   geolocation.getPosition($scope.getData, $scope.showError, $scope.noGeo);
 };
+*/
 
 var _isNumeric = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -97,5 +118,4 @@ angular
   .controller('locationListCtrl', locationListCtrl)
   .filter('formatDistance', formatDistance)
   .directive('ratingStars', ratingStars)
-  .service('loc8rData', loc8rData)
-  .service('geolocation', geolocation);
+  .service('loc8rData', loc8rData);
