@@ -4,13 +4,17 @@ var router = express.Router();
 var ctrlLocations = require('../controllers/locations');
 var ctrlOthers = require('../controllers/others');
 
-/* Location pages */
+/* Angular default template */
+router.get('/', ctrlOthers.angularApp);
+
+/* Express routing
+// Location pages
 router.get('/', ctrlLocations.homelist);
 router.get('/location/:locationid', ctrlLocations.locationInfo);
 router.get('/location/:locationid/review/new', ctrlLocations.addReview);
 router.post('/location/:locationid/review/new', ctrlLocations.doAddReview);
 
-/* Other pages */
+// Other pages
 router.get('/about', ctrlOthers.about);
-
+*/
 module.exports = router;
