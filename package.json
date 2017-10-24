@@ -15,10 +15,11 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
-    "mongoose": "^4.10.8",
+    "mongoose": "4.10.8",
     "morgan": "~1.8.1",
     "readline": "0.0.x",
     "request": "^2.83.0",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "uglify-js": "2.4.11"
   }
 }
