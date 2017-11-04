@@ -34,7 +34,7 @@ var buildLocationList = function(req, res, results, stats) {
   return locations;
 };
 
-var sendJsonResponse = function(res, status, content) {
+var sendJSONResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
 };
@@ -56,7 +56,7 @@ module.exports.locationsListByDistance = function (req, res) {
   };
 
   if ((!lng && lng !== 0) || (!lat && lat !== 0) || !maxDistance) {
-    sendJsonResponse(res, 404, {
+    sendJSONResponse(res, 404, {
       "message": "lng and lat and maxDistance query parameters are required"
     });
     return;
@@ -66,11 +66,11 @@ module.exports.locationsListByDistance = function (req, res) {
     var locations = [];
     
     if (err) {
-      sendJsonResponse(res, 404, err);
+      sendJSONResponse(res, 404, err);
     } else {
       locations = buildLocationList(req, res, results, stats);
   
-      sendJsonResponse(res, 200, locations);
+      sendJSONResponse(res, 200, locations);
     }
   });
 };
@@ -94,9 +94,9 @@ module.exports.locationsCreate = function (req, res) {
     }]
   }, function(err, location) {
     if (err) {
-      sendJsonResponse(res, 400, err);
+      sendJSONResponse(res, 400, err);
     } else {
-      sendJsonResponse(res, 201, location);
+      sendJSONResponse(res, 201, location);
     }
   });
 };
@@ -109,18 +109,18 @@ module.exports.locationsReadOne = function (req, res) {
       .findById(locationid)
       .exec(function(err, location) {
         if (!location) {
-          sendJsonResponse(res, 404, {
+          sendJSONResponse(res, 404, {
             "message": "locationid not found"
           });
           return;
         } else if (err) {
-          sendJsonResponse(res, 404, err);
+          sendJSONResponse(res, 404, err);
           return;
         }
-        sendJsonResponse(res, 200, location);
+        sendJSONResponse(res, 200, location);
       });
   } else {
-    sendJsonResponse(res, 404, {
+    sendJSONResponse(res, 404, {
       "message": "No locationid in request"
     });
   }
@@ -128,7 +128,7 @@ module.exports.locationsReadOne = function (req, res) {
 
 module.exports.locationsUpdateOne = function (req, res) {
   if (!req.params.locationid) {
-    sendJsonResponse(res, 404, {
+    sendJSONResponse(res, 404, {
       "message": "Not found, locationid is required"
     });
     return;
@@ -139,12 +139,12 @@ module.exports.locationsUpdateOne = function (req, res) {
     .select('-reviews -rating')
     .exec(function(err, location) {
       if (!location) {
-        sendJsonResponse(res, 404, {
+        sendJSONResponse(res, 404, {
           "message": "locationid not found"
         });
         return;
       } else if (err) {
-        sendJsonResponse(res, 400, err);
+        sendJSONResponse(res, 400, err);
         return;
       }
 
@@ -167,9 +167,9 @@ module.exports.locationsUpdateOne = function (req, res) {
 
       location.save(function(err, location) {
         if (err) {
-          sendJsonResponse(res, 404, err);
+          sendJSONResponse(res, 404, err);
         } else {
-          sendJsonResponse(res, 200, location);
+          sendJSONResponse(res, 200, location);
         }
       });
     });
@@ -183,14 +183,14 @@ module.exports.locationsDeleteOne = function (req, res) {
     .findByIdAndRemove(locationid)
     .exec(function(err, location) {
       if (err) {
-        sendJsonResponse(res, 404, err);
+        sendJSONResponse(res, 404, err);
         return;
       }
       
-      sendJsonResponse(res, 204, null);
+      sendJSONResponse(res, 204, null);
     });
   } else {
-    sendJsonResponse(res, 404, {
+    sendJSONResponse(res, 404, {
       "message": "No locationid"
     });
   }
