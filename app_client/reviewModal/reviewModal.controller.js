@@ -21,7 +21,7 @@
     vm.onSubmit = function () {
       vm.formError = "";
       
-      if(!vm.formData || !vm.formData.name || !vm.formData.rating || !vm.formData.reviewText) {
+      if(!vm.formData || !vm.formData.rating || !vm.formData.reviewText) {
         vm.formError = "All fields required, please try again";
         return false;
       } else {
@@ -30,17 +30,18 @@
     };
 
     vm.doAddReview = function (locationid, formData) {
-      loc8rData.addReviewById(locationid, {
-        author : formData.name,
-        rating : formData.rating,
-        reviewText : formData.reviewText
-      })
+      loc8rData
+        .addReviewById(locationid, {
+          rating : formData.rating,
+          reviewText : formData.reviewText
+        })
         .success(function (data) {
           vm.modal.close(data);
         })
         .error(function (data) {
           vm.formError = "Your review has not been saved, try again";
         });
+      
       return false;
     };
   }
